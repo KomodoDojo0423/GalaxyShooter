@@ -13,14 +13,20 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       //take the current position = new position (0, 0, 0)
        transform.position = new Vector3(0, 0, 0); 
     }
 
     // Update is called once per frame
     void Update()
     {
-      //Player movement inputs
+      
+      CalculateMovement();
+
+    }
+      
+    void CalculateMovement()
+    {
+        //Player movement inputs
       float horizontalInput = Input.GetAxis("Horizontal"); 
       float verticalInput = Input.GetAxis("Vertical");
 
@@ -46,6 +52,8 @@ public class Player : MonoBehaviour
       {
         transform.position = new Vector3(11.5f, transform.position.y, 0);
       }
-  
+
     }
 }
+
+
