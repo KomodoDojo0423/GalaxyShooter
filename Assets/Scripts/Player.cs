@@ -5,10 +5,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 3.5f;
+    private float speed = 3.5f;
 
-    public float horizontalInput;
-    public float verticalInput;
+    private float _horizontalInput;
+    private float _verticalInput;
+
+    [SerializeField]
+    private GameObject _laserPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +25,24 @@ public class Player : MonoBehaviour
       
       CalculateMovement();
 
+        //if I hit the space
+        //spawn laser
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
+
     }
       
     void CalculateMovement()
     {
         //Player movement inputs
-      float horizontalInput = Input.GetAxis("Horizontal"); 
-      float verticalInput = Input.GetAxis("Vertical");
+      float _horizontalInput = Input.GetAxis("Horizontal"); 
+      float _verticalInput = Input.GetAxis("Vertical");
 
-      transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
-      transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
+      transform.Translate(Vector3.right * _horizontalInput * speed * Time.deltaTime);
+      transform.Translate(Vector3.up * _verticalInput * speed * Time.deltaTime);
 
       //Player bounds for Y axis
       if(transform.position.y >= 0)
