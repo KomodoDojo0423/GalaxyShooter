@@ -25,4 +25,21 @@ public class Enemy : MonoBehaviour
         }
                
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.tag == "Player")
+        {
+            Destroy(this.gameObject);
+            //Damage Player
+        }
+
+       
+        if (other.tag == "Laser")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
+    }
 }
