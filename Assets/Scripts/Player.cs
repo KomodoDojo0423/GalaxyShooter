@@ -100,7 +100,6 @@ public class Player : MonoBehaviour
 
         if (_lives < 1)
         {
-            //communicate w spawn manager to stop spawning
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
@@ -119,6 +118,11 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(5.0f);
             _isTripleShotActive = false;
         }
+    }
+
+    public void SpeedPowerupActive()
+    {
+        Debug.Log("Speed is Active!");
     }
 }
 
