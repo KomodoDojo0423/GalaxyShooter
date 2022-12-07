@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3f;
-    [SerializeField]
+    [SerializeField]//0 = Triple, 1 = Speed, 2 = Shields
     private int _powerupID;
 
     void Update()
@@ -33,6 +33,10 @@ public class PowerUp : MonoBehaviour
                 else if(_powerupID == 1)
                 {
                     player.SpeedPowerupActive();
+                }
+                else if (_powerupID == 2)
+                {
+                    Debug.Log("Shields Collected");
                 }
                 
             }
