@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -11,30 +13,43 @@ public class Player : MonoBehaviour
     private float _horizontalInput;
     private float _verticalInput;
     private float _canFire = -1f;
-    [SerializeField]
+  
     private bool _isTripleShotActive = false;
+    private bool _isSpeedBoostActive = false;
+    private bool _isShieldActive = false;
 
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _shieldVisual;
 
     private Vector3 laserPosition = new Vector3(0, 0.8f, 0);
 
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _score;
 
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
 
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("SpawnManager is Null");
+        }
+
+        if(_uiManager == null)
+        {
+            Debug.LogError("UIManager is Null");
         }
     }
 
@@ -96,6 +111,12 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        
+        if(_isShieldActive == true)
+        {
+            return;
+        }
+
         _lives -= 1;
 
         if (_lives < 1)
@@ -111,6 +132,18 @@ public class Player : MonoBehaviour
         StartCoroutine(PowerDownRoutine());
     }
 
+    public void SpeedPowerupActive()
+    {
+        _isSpeedBoostActive = true;
+        StartCoroutine(PowerDownRoutine());
+    }
+
+    public void ShieldPowerupActive()
+    {
+        _isShieldActive = true;
+        StartCoroutine(PowerDownRoutine());
+    }
+
     IEnumerator PowerDownRoutine()
     {
         while (_isTripleShotActive == true)
@@ -118,12 +151,32 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(5.0f);
             _isTripleShotActive = false;
         }
+
+        while(_isSpeedBoostActive == true)
+        {
+            speed = 8.5f;
+            yield return new WaitForSeconds(5.0f);
+            speed = 5.0f;
+            _isSpeedBoostActive = false;
+        }
+
+        while(_isShieldActive == true)
+        {
+            _shieldVisual.SetActive(true);
+            yield return new WaitForSeconds(5.0f);
+            _shieldVisual.SetActive(false);
+            _isShieldActive = false;
+        }
     }
 
-    public void SpeedPowerupActive()
+    public void AddToScore()
     {
-        Debug.Log("Speed is Active!");
+        _score += 10;
+        _uiManager.UpdateScore(_score);
+        //communicate with UI to add score
     }
+
+    
 }
 
 

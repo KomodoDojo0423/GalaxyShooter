@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PowerUp : MonoBehaviour
 {
@@ -26,17 +28,21 @@ public class PowerUp : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {
-                if(_powerupID == 0)
+               
+                switch (_powerupID)
                 {
-                    player.TripleShotActive();
-                }
-                else if(_powerupID == 1)
-                {
-                    player.SpeedPowerupActive();
-                }
-                else if (_powerupID == 2)
-                {
-                    Debug.Log("Shields Collected");
+                    case 0:
+                        player.TripleShotActive();
+                        break;
+                    case 1:
+                        player.SpeedPowerupActive();
+                        break;
+                    case 2:
+                        player.ShieldPowerupActive();
+                        break;
+                    default:
+                        Debug.Log("Default Status");
+                        break;
                 }
                 
             }

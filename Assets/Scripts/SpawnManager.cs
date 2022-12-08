@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -9,11 +11,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
-    private GameObject _tripleShot;
-    [SerializeField]
-    private GameObject _speedPowerup;
-    [SerializeField]
-    private GameObject _powerupContainer;
+    private GameObject[] _powerups;
+    
 
     private bool _stopSpawning;
     
@@ -21,7 +20,6 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
-        StartCoroutine(SpawnSpeedPowerupRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -40,20 +38,9 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             yield return new WaitForSeconds(Random.Range(3.0f, 8.0f));
-            GameObject newPowerup = Instantiate(_tripleShot, new Vector3(Random.Range(-8.5f, 8.5f), 7.5f, 0), Quaternion.identity);
-            newPowerup.transform.parent = _powerupContainer.transform;
+            int randomPowerup = Random.Range(0, 3);
+            Instantiate(_powerups[randomPowerup], new Vector3(Random.Range(-8.5f, 8.5f), 7.5f, 0), Quaternion.identity);
         }
-    }
-
-    IEnumerator SpawnSpeedPowerupRoutine()
-    {
-        while (_stopSpawning == false)
-        {
-            yield return new WaitForSeconds(Random.Range(5.0f, 11.0f));
-            GameObject speedPowerup = Instantiate(_speedPowerup, new Vector3(Random.Range(-8.5f, 8.5f), 7.5f, 0), Quaternion.identity);
-            speedPowerup.transform.parent = _powerupContainer.transform;
-        }
-        
     }
 
     public void OnPlayerDeath()
