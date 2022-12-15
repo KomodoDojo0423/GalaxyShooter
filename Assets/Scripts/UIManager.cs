@@ -8,15 +8,23 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _scoreText;
+    [SerializeField]
+    private Image _livesImage;
+    [SerializeField]
+    private Sprite[] _liveSprites;
     
     void Start()
     {
-        //assign text component to handle
         _scoreText.text = "Score: " + 0;
     }
 
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+
+    public void UpdateLives(int currentLives)
+    {
+        _livesImage.sprite = _liveSprites[currentLives];
     }
 }
