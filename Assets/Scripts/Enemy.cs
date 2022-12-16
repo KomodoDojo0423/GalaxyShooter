@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        //transform.position = new Vector3(0, 7.5f, 0);
     }
 
     
